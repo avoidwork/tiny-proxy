@@ -1,0 +1,1 @@
+{"name":"tiny-proxy","tagline":"Create a proxy for an Object which you can safely work with","body":"## API\r\n\r\n#### proxy(obj[, read_only])\r\nReturns a proxy for `obj` with getters & setters, or only getters if `read_only` is `true`\r\n\r\n\r\n\r\n\r\n\r\n","google":"","note":"Don't delete this file! It's used internally to help with page regeneration."}
