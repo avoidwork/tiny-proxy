@@ -1,32 +1,38 @@
+/**
+ * Creates a proxy of an Object
+ *
+ * @method proxy
+ * @param  {Object} origin Object to proxy
+ * @return {Object}        Proxy
+ */
 function proxy ( origin ) {
-	var o = {},
-	    s = origin;
+	var p = {};
 
-	iterate( s, function ( v, k ) {
+	iterate( origin, function ( v, k ) {
 		var getter, setter;
 
-		if ( !( v instanceof RegExp ) && typeof v === "function" ) {
-			o[k] = v.bind( o[k] );
+		if ( !( v instanceof RegExp ) && typeof v == "function" ) {
+			p[k] = v.bind( p[k] );
 		}
 		else if ( !(v instanceof RegExp ) && !(v instanceof Array ) && v instanceof Object ) {
-			if ( o[k] === undefined ) {
-				o[k] = {};
+			if ( p[k] === undefined ) {
+				p[k] = {};
 			}
 
-			o[k] = proxy( s[k] );
+			p[k] = proxy( origin[k] );
 		}
 		else {
 			getter = function () {
-				return s[k];
+				return origin[k];
 			};
 
 			setter = function ( arg ) {
-				s[k] = arg;
+				origin[k] = arg;
 			};
 
-			property( o, k, {enumerable: true, get: getter, set: setter, value: s[k]} );
+			property( p, k, {enumerable: true, get: getter, set: setter, value: origin[k]} );
 		}
-	});
+	} );
 
-	return o;
+	return p;
 }
