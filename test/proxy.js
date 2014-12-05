@@ -35,6 +35,24 @@ exports["proxy_modify"] = {
 	}
 };
 
+exports["proxy_read_only"] = {
+	setUp: function (done) {
+		this.obj = {abc: false};
+		done();
+	},
+	test: function (test) {
+		var p = proxy(this.obj, true);
+
+		test.expect(4);
+		test.equal(Object.keys(this.obj).length, 1, "Should be 1");
+		test.equal(Object.keys(p).length, 1, "Should be 1");
+		p.abc = true;
+		test.equal(this.obj.abc, false, "Should be match");
+		test.equal(p.abc, false, "Should be match");
+		test.done();
+	}
+};
+
 exports["proxy_delete (valid)"] = {
 	setUp: function (done) {
 		this.obj = {abc: false};

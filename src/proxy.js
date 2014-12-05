@@ -2,10 +2,11 @@
  * Creates a proxy of an Object
  *
  * @method proxy
- * @param  {Object} origin Object to proxy
- * @return {Object}        Proxy
+ * @param  {Object}  origin    Object to proxy
+ * @param  {Boolean} read_only [Optional] No setters if `true`, default is `false`
+ * @return {Object}            Proxy
  */
-function proxy ( origin ) {
+function proxy ( origin, read_only ) {
 	var p = {};
 
 	iterate( origin, function ( v, k ) {
@@ -30,7 +31,12 @@ function proxy ( origin ) {
 				origin[k] = arg;
 			};
 
-			property( p, k, {enumerable: true, get: getter, set: setter, value: origin[k]} );
+			if ( read_only ) {
+				Object.defineProperty( p, k, {enumerable: true, get: getter} );
+			}
+			else {
+				Object.defineProperty( p, k, {enumerable: true, get: getter, set: setter} );
+			}
 		}
 	} );
 

@@ -6,5 +6,5 @@ tiny-proxy gives you a way to quickly create an Object proxy for passing around
 
 ## API
 
-#### proxy(obj)
-Returns a proxy for `obj`
+#### proxy(obj[, read_only])
+Returns a proxy for `obj` with getters & setters, or only getters if `read_only` is `true`

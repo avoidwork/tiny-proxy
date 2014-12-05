@@ -19,7 +19,6 @@ module.exports = function (grunt) {
 					"src/intro.js",
 					"src/each.js",
 					"src/iterate.js",
-					"src/property.js",
 					"src/proxy.js",
 					"src/outro.js"
 				],
