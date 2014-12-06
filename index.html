@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>tiny-proxy</h1>
-        <p>Create a proxy for an Object which you can safely work with</p>
+        <p>Tiny Object proxy for Client or Server</p>
 
         <p class="view"><a href="https://github.com/avoidwork/tiny-proxy">View the Project on GitHub <small>avoidwork/tiny-proxy</small></a></p>
 
@@ -35,6 +35,21 @@
 <a id="proxyobj-read_only" class="anchor" href="#proxyobj-read_only" aria-hidden="true"><span class="octicon octicon-link"></span></a>proxy(obj[, read_only])</h4>
 
 <p>Returns a proxy for <code>obj</code> with getters &amp; setters, or only getters if <code>read_only</code> is <code>true</code></p>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> proxy <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>proxy<span class="pl-pds">'</span></span>),
+    data  <span class="pl-k">=</span> {<span class="pl-s1"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>John<span class="pl-pds">'</span></span>, ...},
+    data_proxy <span class="pl-k">=</span> proxy(data, <span class="pl-c1">true</span>);
+
+<span class="pl-c">// Send the read-only proxy out</span>
+someFunction(data_proxy);</pre></div>
+
+<h2>
+<a id="status" class="anchor" href="#status" aria-hidden="true"><span class="octicon octicon-link"></span></a>Status</h2>
+
+<p><a href="http://travis-ci.org/avoidwork/tiny-proxy"><img src="https://secure.travis-ci.org/avoidwork/tiny-proxy.svg" alt="build status"></a></p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/avoidwork">avoidwork</a></p>
