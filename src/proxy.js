@@ -31,7 +31,7 @@ function proxy ( origin, read_only ) {
 				origin[k] = arg;
 			};
 
-			if ( read_only ) {
+			if ( read_only === true ) {
 				Object.defineProperty( p, k, {enumerable: true, get: getter} );
 			}
 			else {
