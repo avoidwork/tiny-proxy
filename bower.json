@@ -1,0 +1,30 @@
+{
+  "name": "tiny-proxy",
+  "version": "1.0.2",
+  "homepage": "https://github.com/avoidwork/tiny-proxy",
+  "authors": [
+    "Jason Mulligan <jason.mulligan@avoidwork.com>"
+  ],
+  "description": "Tiny Object proxy for Client or Server",
+  "main": "lib/tiny-proxy.min.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "proxy",
+    "Object"
+  ],
+  "license": "BSD-3",
+  "ignore": [
+    "**/.*",
+    "doc",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "tests",
+    "docstrap.json"
+  ]
+}
