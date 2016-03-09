@@ -1,20 +1,19 @@
 module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg : grunt.file.readJSON("package.json"),
-		concat : {
+		concat: {
 			options : {
 				banner : "/**\n" +
-				         " * <%= pkg.description %>\n" +
-				         " *\n" +
-				         " * @author <%= pkg.author.name %> <<%= pkg.author.email %>>\n" +
-				         " * @copyright <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>\n" +
-				         " * @license <%= pkg.licenses[0].type %> <<%= pkg.licenses[0].url %>>\n" +
-				         " * @link <%= pkg.homepage %>\n" +
-				         " * @module <%= pkg.name %>\n" +
-				         " * @version <%= pkg.version %>\n" +
-				         " */\n"
+				" * <%= pkg.description %>\n" +
+				" *\n" +
+				" * @author <%= pkg.author %>\n" +
+				" * @copyright <%= grunt.template.today('yyyy') %>\n" +
+				" * @license <%= pkg.license %>\n" +
+				" * @link <%= pkg.homepage %>\n" +
+				" * @version <%= pkg.version %>\n" +
+				" */\n"
 			},
-			dist : {
+			dist: {
 				src : [
 					"src/intro.js",
 					"src/each.js",
@@ -22,44 +21,47 @@ module.exports = function (grunt) {
 					"src/proxy.js",
 					"src/outro.js"
 				],
-				dest : "lib/<%= pkg.name %>.js"
+				dest : "lib/<%= pkg.name %>.es6.js"
 			}
 		},
-		jsdoc : {
-			dist : {
-				src: ["lib/<%= pkg.name %>.js", "README.md"],
-				options: {
-				    destination : "doc",
-				    template    : "node_modules/ink-docstrap/template",
-				    configure   : "docstrap.json",
-				    "private"   : false
+		babel: {
+			options: {
+				sourceMap: false,
+				presets: ["babel-preset-es2015"]
+			},
+			dist: {
+				files: {
+					"lib/<%= pkg.name %>.js": "lib/<%= pkg.name %>.es6.js"
 				}
 			}
 		},
-		jshint : {
-			options : {
-				jshintrc : ".jshintrc"
-			},
-			src : "lib/<%= pkg.name %>.js"
+		eslint: {
+			target: ["lib/<%= pkg.name %>.es6.js"]
 		},
 		nodeunit : {
 			all : ["test/*.js"]
 		},
+		sed : {
+			"version" : {
+				pattern : "{{VERSION}}",
+				replacement : "<%= pkg.version %>",
+				path : ["<%= concat.dist.dest %>"]
+			}
+		},
 		uglify: {
 			options: {
-				banner : "/*\n" +
-				" <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>\n" +
-				" @version <%= pkg.version %>\n" +
-				" */",
+				banner: '/* <%= grunt.template.today("yyyy") %> <%= pkg.author %> */\n',
 				sourceMap: true,
 				sourceMapIncludeSources: true,
 				mangle: {
-					except: ["retsu", "define", "export", "process"]
+					except: [
+						"uuid"
+					]
 				}
 			},
 			target: {
 				files: {
-					"lib/tiny-proxy.min.js" : ["lib/tiny-proxy.js"]
+					"lib/<%= pkg.name %>.min.js" : ["lib/<%= pkg.name %>.js"]
 				}
 			}
 		},
@@ -76,16 +78,16 @@ module.exports = function (grunt) {
 	});
 
 	// tasks
-	grunt.loadNpmTasks("grunt-jsdoc");
+	grunt.loadNpmTasks("grunt-sed");
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-nodeunit");
-	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-watch");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
+	grunt.loadNpmTasks("grunt-babel");
+	grunt.loadNpmTasks("grunt-eslint");
 
 	// aliases
-	grunt.registerTask("test", ["jshint", "nodeunit"]);
-	grunt.registerTask("build", ["concat", "test"]);
-	grunt.registerTask("default", ["build", "uglify"]);
-	grunt.registerTask("package", ["default", "jsdoc"]);
+	grunt.registerTask("test", ["eslint", "nodeunit"]);
+	grunt.registerTask("build", ["concat", "sed", "babel", "uglify"]);
+	grunt.registerTask("default", ["build", "test"]);
 };

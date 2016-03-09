@@ -1,5 +1,4 @@
 /.idea/
-/doc/
 /node_modules/
 /lib/tiny-proxy.min.js
 /lib/tiny-proxy.min.js.map
@@ -7,7 +6,6 @@
 /test/
 .git
 .gitignore
-.jshintrc
+.eslintrc
 .travis.yml
-docstrap.json
 Gruntfile.js

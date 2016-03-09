@@ -6,18 +6,22 @@ Tiny Object proxy for Client or Server
 
 ## API
 
-#### proxy(obj[, read_only])
-Returns a proxy for `obj` with getters & setters, or only getters if `read_only` is `true`
+#### proxy(obj[, readOnly = false, changeHandler])
+Returns a proxy for `obj` with getters & setters, or only getters if `readOnly` is `true`.
 
 ## Example
 ```javascript
-var proxy = require('proxy'),
-    data  = {'name': 'John', ...},
-    data_proxy = proxy(data, true);
+let original = {a: true};
+let dupe = proxy(original, false, function (oldValue, newValue) {
+	console.log('old value: ' + oldValue);
+	console.log('new value: ' + newValue);
+});
 
-// Send the read-only proxy out
-someFunction(data_proxy);
+dupe.a = false; // `onchange` handler fires!
 ```
+
+## Handling changes
+Writable proxies will fire the `onchange` function after applying a change with the `oldValue` & `newValue` as arguments.
 
 ## License
 Copyright (c) 2014 Jason Mulligan
