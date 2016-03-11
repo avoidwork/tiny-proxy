@@ -24,5 +24,5 @@ facade.a = false; // a was true, and is now false
 Writable proxies will fire the `onchange` function after applying a change with the `key`, `oldValue` & `newValue` as arguments.
 
 ## License
-Copyright (c) 2014 Jason Mulligan
+Copyright (c) 2016 Jason Mulligan
 Licensed under the BSD-3 license
