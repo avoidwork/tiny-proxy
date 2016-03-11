@@ -11,17 +11,17 @@ Returns a proxy for `obj` with getters & setters, or only getters if `readOnly` 
 
 ## Example
 ```javascript
+const proxy = require('tiny-proxy');
 let original = {a: true};
-let dupe = proxy(original, false, function (oldValue, newValue) {
-	console.log('old value: ' + oldValue);
-	console.log('new value: ' + newValue);
+let facade = proxy(original, false, function (key, oldValue, newValue) {
+	console.log(key + ' was ' + oldValue + ', and is now ' + newValue);
 });
 
-dupe.a = false; // `onchange` handler fires!
+facade.a = false; // a was true, and is now false
 ```
 
 ## Handling changes
-Writable proxies will fire the `onchange` function after applying a change with the `oldValue` & `newValue` as arguments.
+Writable proxies will fire the `onchange` function after applying a change with the `key`, `oldValue` & `newValue` as arguments.
 
 ## License
 Copyright (c) 2014 Jason Mulligan

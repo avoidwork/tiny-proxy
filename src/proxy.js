@@ -26,7 +26,7 @@ class Proxy {
 					let old = origin[k];
 
 					origin[k] = arg;
-					this.onchange(old, arg);
+					this.onchange(k, old, arg);
 				};
 
 				Object.defineProperty(this, k, this.readOnly ? {enumerable: true, get: getter} : {enumerable: true, get: getter, set: setter});
